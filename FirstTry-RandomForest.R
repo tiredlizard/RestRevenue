@@ -100,7 +100,7 @@ CV_results <- forest_wf %>%
             metrics = metric_set(rmse))
 
 bestTune_cf <- CV_results_cf %>%
-  select_best(metric = 'roc_auc')
+  select_best(metric = 'rmse')
 
 
 setdiff(unique(rest_test_2$open_year), unique(rest_train$City))
