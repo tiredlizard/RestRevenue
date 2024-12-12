@@ -22,11 +22,11 @@ rest_recipe <- recipe(revenue ~ ., data = rest_train) %>%
   step_rm(Id) %>%
   step_date(open_date, features = c("year", "month", "doy", "decimal")) %>%  # Extracts year, month, day of year
   step_rm(open_date) %>%
-  step_other(all_nominal_predictors(), threshold = .05)
+  step_other(all_nominal_predictors(), threshold = .05) %>%
+  step_dummy(all_nominal_predictors()) %>%
+  step_novel(all_nominal_predictors()) %>%
+  step_dummy(all_nominal_predictors())
 
-
-
-  
 
 prepped <- prep(rest_recipe)
 baked <- bake(prepped, new_data = rest_train)
@@ -81,5 +81,5 @@ submission <- bind_cols(rest_test$Id, preds) %>%
   rename(Id = ...1) %>%
   rename(Prediction = .pred)
 
-write_csv(submission, 'Submission_forest5.csv')
+write_csv(submission, 'Submission_forest6.csv')
 
